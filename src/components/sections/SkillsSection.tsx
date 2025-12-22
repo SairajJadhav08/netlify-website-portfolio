@@ -60,10 +60,10 @@ type GenAITool = {
 };
 
 const genAITools: GenAITool[] = [
-  { name: "Cursor", icon: "/images/cursor-logo.png", fallbackIcon: Sparkles },
-  { name: "Windsurf", icon: "/images/windsurf-logo.svg", fallbackIcon: Zap },
-  { name: "GitHub Copilot", icon: "/images/github-copilot-logo.svg", fallbackIcon: Bot },
-  { name: "n8n", icon: "/images/n8n-logo.png", fallbackIcon: Workflow },
+  { name: "Cursor", icon: "/SairajJadhav08/images/cursor-logo.png", fallbackIcon: Sparkles },
+  { name: "Windsurf", icon: "/SairajJadhav08/images/windsurf-logo.svg", fallbackIcon: Zap },
+  { name: "GitHub Copilot", icon: "/SairajJadhav08/images/github-copilot-logo.svg", fallbackIcon: Bot },
+  { name: "n8n", icon: "/SairajJadhav08/images/n8n-logo.png", fallbackIcon: Workflow },
   { name: "Antigravity", icon: null, fallbackIcon: Rocket },
   { name: "Onemind", icon: null, fallbackIcon: Brain },
 ];
@@ -79,11 +79,11 @@ const SkillsSection = () => {
             <div className="flex-1 h-px bg-border" />
           </div>
         </AnimatedSection>
-        
+
         <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12" staggerDelay={0.1}>
           {skillCategories.map((category, index) => (
-            <motion.div 
-              key={index} 
+            <motion.div
+              key={index}
               className="glass-card p-6"
               variants={staggerItemVariants}
               whileHover={{ y: -5 }}
@@ -91,8 +91,8 @@ const SkillsSection = () => {
               <h3 className="text-lg font-semibold mb-4 text-primary">{category.title}</h3>
               <div className="space-y-3">
                 {category.skills.map((skill, i) => (
-                  <motion.div 
-                    key={i} 
+                  <motion.div
+                    key={i}
                     className="flex items-center gap-3 hover:translate-x-2 transition-transform duration-300"
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
@@ -107,17 +107,17 @@ const SkillsSection = () => {
             </motion.div>
           ))}
         </StaggerContainer>
-        
+
         {/* Special Focus */}
         <AnimatedSection delay={0.2}>
-          <motion.div 
+          <motion.div
             className="glass-card p-6 mb-6"
             whileHover={{ scale: 1.01 }}
           >
             <h3 className="text-lg font-semibold mb-4 text-primary">Special Focus</h3>
             <div className="flex flex-wrap gap-3">
               {specialFocus.map((focus, index) => (
-                <motion.span 
+                <motion.span
                   key={index}
                   className="px-4 py-2 bg-secondary rounded-full text-sm hover:bg-primary hover:text-primary-foreground transition-all duration-300 cursor-default"
                   initial={{ opacity: 0, scale: 0.8 }}
@@ -132,10 +132,10 @@ const SkillsSection = () => {
             </div>
           </motion.div>
         </AnimatedSection>
-        
+
         {/* GenAI Tools */}
         <AnimatedSection delay={0.3}>
-          <motion.div 
+          <motion.div
             className="glass-card p-6"
             whileHover={{ scale: 1.01 }}
           >
@@ -144,8 +144,8 @@ const SkillsSection = () => {
               {genAITools.map((tool, index) => {
                 const FallbackIcon = tool.fallbackIcon;
                 return (
-                  <motion.div 
-                    key={index} 
+                  <motion.div
+                    key={index}
                     className="flex items-center gap-3 px-4 py-2 bg-secondary rounded-lg hover:bg-secondary/80 transition-colors"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -154,9 +154,9 @@ const SkillsSection = () => {
                     whileHover={{ scale: 1.05, y: -2 }}
                   >
                     {tool.icon ? (
-                      <img 
-                        src={tool.icon} 
-                        alt={tool.name} 
+                      <img
+                        src={tool.icon}
+                        alt={tool.name}
                         className="w-6 h-6 rounded"
                         onError={(e) => {
                           e.currentTarget.style.display = 'none';
