@@ -15,7 +15,7 @@ const projects = [
       "Emergency notification system",
     ],
     technologies: ["HTML", "CSS", "JavaScript", "Node.js", "Express.js", "Firebase"],
-    image: "https://sairajjadhav08.github.io/SairajJadhav08/images/smart-regional-alert.png",
+    image: "/images/smart-regional-alert.png",
   },
   {
     title: "LiveStream-Card-Recognition-System-LCRS",
@@ -30,7 +30,7 @@ const projects = [
       "Interactive gaming integration",
     ],
     technologies: ["Python", "OpenCV", "Deep Learning", "Object Detection", "Pygame"],
-    image: "https://sairajjadhav08.github.io/SairajJadhav08/images/real-time-card-detector.png",
+    image: "/images/real-time-card-detector.png",
   },
   {
     title: "NutriCare-360",
@@ -45,7 +45,7 @@ const projects = [
       "Personalized healthcare dashboard",
     ],
     technologies: ["Python", "Flask", "HTML/CSS", "API Integration"],
-    image: "https://sairajjadhav08.github.io/SairajJadhav08/images/MedVault.png",
+    image: "/images/MedVault.png",
   },
   {
     title: "AI Meme Generator",
@@ -60,7 +60,7 @@ const projects = [
       "Export & share functionality",
     ],
     technologies: ["Python", "NLP", "Pillow", "API"],
-    image: "https://sairajjadhav08.github.io/SairajJadhav08/images/ai-meme-generator.png",
+    image: "/images/ai-meme-generator.png",
   },
   {
     title: "Viro-AI: Viral Insight Rapid Optimization",
@@ -75,7 +75,7 @@ const projects = [
       "Pandemic preparedness analytics",
     ],
     technologies: ["Python", "Machine Learning", "Deep Learning", "Data Science", "AI"],
-    image: "https://sairajjadhav08.github.io/SairajJadhav08/images/ViroAI.png",
+    image: "/images/ViroAI.png",
   },
   {
     title: "NetKey-Reveal GUI",
@@ -90,7 +90,7 @@ const projects = [
       "Secure local storage access",
     ],
     technologies: ["Python", "GUI", "Web", "API"],
-    image: "https://sairajjadhav08.github.io/SairajJadhav08/images/Wifi%20Password.png",
+    image: "/images/Wifi Password.png",
   },
   {
     title: "AIVORA Labs",
@@ -105,7 +105,7 @@ const projects = [
       "Intelligent workflow automation",
     ],
     technologies: ["Python", "AI/ML", "Automation", "Research"],
-    image: "https://sairajjadhav08.github.io/SairajJadhav08/images/AIVORA%20Logo.png",
+    image: "/images/AIVORA Logo.png",
   },
   {
     title: "BRAILLEAR",
@@ -120,7 +120,7 @@ const projects = [
       "IoT-enabled connectivity",
     ],
     technologies: ["Python", "Text-to-Speech", "Assistive Tech", "IoT"],
-    image: "https://sairajjadhav08.github.io/SairajJadhav08/images/Baillear%20Logo.png",
+    image: "/images/Baillear Logo.png",
   },
   {
     title: "DriveU",
@@ -135,7 +135,7 @@ const projects = [
       "Reliable scheduling system",
     ],
     technologies: ["Web Development", "Mobility", "API Integration", "User Experience"],
-    image: "https://sairajjadhav08.github.io/SairajJadhav08/images/Drive%20uLogo.png",
+    image: "/images/Drive uLogo.png",
   },
   {
     title: "MEDLOCUS",
@@ -150,7 +150,7 @@ const projects = [
       "RESTful API integration",
     ],
     technologies: ["Healthcare Tech", "Smart Management", "Precision Care", "Data Analytics"],
-    image: "https://sairajjadhav08.github.io/SairajJadhav08/images/Medlocus%20Logo.png",
+    image: "/images/Medlocus Logo.png",
   },
   {
     title: "LocalChat-AI (Mike)",
@@ -165,7 +165,7 @@ const projects = [
       "Custom instructions & personalization",
     ],
     technologies: ["Python", "FastAPI", "Ollama", "Llama 3", "AI/ML"],
-    image: "https://sairajjadhav08.github.io/SairajJadhav08/images/Localchat-Ai.png",
+    image: "/images/Localchat-Ai.png",
   },
 ];
 
@@ -180,23 +180,23 @@ const ProjectsSection = () => {
             <div className="flex-1 h-px bg-border" />
           </div>
         </AnimatedSection>
-        
+
         <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" staggerDelay={0.08}>
           {projects.map((project, index) => (
-            <motion.div 
+            <motion.div
               key={index}
               className="glass-card overflow-hidden group hover:border-primary/50 transition-all duration-300"
               variants={staggerItemVariants}
               whileHover={{ y: -8 }}
             >
               <div className="relative h-48 overflow-hidden">
-                <img 
+                <img
                   src={project.image}
                   alt={project.title}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent" />
-                <motion.span 
+                <motion.span
                   className="absolute top-4 left-4 px-3 py-1 bg-primary/90 text-primary-foreground text-xs rounded-full"
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
@@ -206,7 +206,7 @@ const ProjectsSection = () => {
                   {project.category}
                 </motion.span>
               </div>
-              
+
               <div className="p-6">
                 <h3 className="text-xl font-bold mb-1 group-hover:text-primary transition-colors">
                   {project.title}
@@ -215,7 +215,7 @@ const ProjectsSection = () => {
                 <p className="text-muted-foreground text-sm mb-4 line-clamp-3">
                   {project.description}
                 </p>
-                
+
                 <div className="space-y-2 mb-4">
                   <p className="text-xs text-muted-foreground font-semibold">Key Features:</p>
                   <ul className="text-xs text-muted-foreground space-y-1">
@@ -227,11 +227,11 @@ const ProjectsSection = () => {
                     ))}
                   </ul>
                 </div>
-                
+
                 <div className="flex flex-wrap gap-2">
                   {project.technologies.slice(0, 4).map((tech, i) => (
-                    <motion.span 
-                      key={i} 
+                    <motion.span
+                      key={i}
                       className="px-2 py-1 bg-secondary text-xs rounded"
                       whileHover={{ scale: 1.1 }}
                     >

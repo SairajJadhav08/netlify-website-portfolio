@@ -1,73 +1,180 @@
-# Welcome to your Lovable project
+# Sairaj Jadhav - Portfolio Website
 
-## Project info
+A modern, responsive portfolio website built with React, TypeScript, and Tailwind CSS. Deployed on Netlify.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## 🌐 Live Site
 
-## How can I edit this code?
+**https://sairaj-jadhav-portfolio.netlify.app/**
 
-There are several ways of editing your application.
+---
 
-**Use Lovable**
+## 🛠️ Tech Stack
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+| Technology | Purpose |
+|------------|---------|
+| **Vite** | Build tool & dev server |
+| **React 18** | UI framework |
+| **TypeScript** | Type safety |
+| **Tailwind CSS** | Styling |
+| **shadcn/ui** | UI components |
+| **Framer Motion** | Animations |
+| **React Router** | Client-side routing |
 
-Changes made via Lovable will be committed automatically to this repo.
+---
 
-**Use your preferred IDE**
+## 📁 Project Structure
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```
+├── public/
+│   ├── images/           # All portfolio images (profile, projects, certificates)
+│   ├── _redirects        # Netlify SPA routing configuration
+│   ├── 404.html          # Fallback for SPA routing
+│   └── favicon.ico       # (unused - favicon uses Profile.jpeg)
+├── src/
+│   ├── components/
+│   │   ├── sections/     # Page sections (Hero, About, Skills, Projects, etc.)
+│   │   └── ui/           # Reusable UI components (shadcn/ui)
+│   ├── pages/            # Route pages (Index, NotFound)
+│   ├── assets/           # Static assets imported in code
+│   ├── App.tsx           # Main app with routing
+│   └── main.tsx          # Entry point
+├── index.html            # HTML template with meta tags & favicon
+├── vite.config.ts        # Vite configuration (base path = "/")
+└── tailwind.config.ts    # Tailwind configuration
 ```
 
-**Edit a file directly in GitHub**
+---
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 🚀 Development Commands
 
-**Use GitHub Codespaces**
+```bash
+# Install dependencies
+npm install
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+# Start development server (http://localhost:8080)
+npm run dev
 
-## What technologies are used for this project?
+# Build for production
+npm run build
 
-This project is built with:
+# Preview production build locally
+npm run preview
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+# Deploy to Netlify
+netlify deploy --prod --dir=dist
+```
 
-## How can I deploy this project?
+---
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+## 📝 How to Make Changes
 
-## Can I connect a custom domain to my Lovable project?
+### Adding/Updating Images
 
-Yes, you can!
+1. Place images in `public/images/` folder
+2. Reference them in code as `/images/filename.ext`
+3. Example: `<img src="/images/Profile.jpeg" />`
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+### Updating Content
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+| Section | File |
+|---------|------|
+| Hero (name, bio, links) | `src/components/sections/HeroSection.tsx` |
+| About | `src/components/sections/AboutSection.tsx` |
+| Skills | `src/components/sections/SkillsSection.tsx` |
+| Projects | `src/components/sections/ProjectsSection.tsx` |
+| Certifications | `src/components/sections/CertificationsSection.tsx` |
+| Contact | `src/components/sections/ContactSection.tsx` |
+
+### Updating Meta Tags (SEO/Social Sharing)
+
+Edit `index.html`:
+- `<title>` - Browser tab title
+- `<meta name="description">` - SEO description
+- `<meta property="og:*">` - Social media preview (Facebook, LinkedIn)
+- `<meta name="twitter:*">` - Twitter card
+- `<link rel="icon">` - Favicon (uses Profile.jpeg)
+
+---
+
+## 🌐 Deployment (Netlify)
+
+### First-time Setup (Already Done)
+
+```bash
+npm install -g netlify-cli
+netlify login
+netlify sites:create --name sairaj-jadhav-portfolio
+```
+
+### Deploy Updates
+
+```bash
+npm run build
+netlify deploy --prod --dir=dist
+```
+
+### Important Configuration
+
+- **Netlify Site Name**: `sairaj-jadhav-portfolio`
+- **Site URL**: https://sairaj-jadhav-portfolio.netlify.app/
+- **Build Output**: `dist/` folder
+- **Base Path**: `/` (configured in `vite.config.ts`)
+
+The `public/_redirects` file handles SPA routing on Netlify:
+```
+/*    /index.html   200
+```
+
+---
+
+## ⚠️ Important Notes for AI Assistants
+
+### Base Path Configuration
+
+- **Netlify**: Base path is `/` (root)
+- **GitHub Pages**: Would require `/repo-name/` base path
+- Current config in `vite.config.ts`: `base: "/"`
+
+### Image Paths
+
+All images use **absolute paths** from root:
+- ✅ Correct: `/images/Profile.jpeg`
+- ❌ Wrong: `./images/Profile.jpeg` or relative paths
+
+### SPA Routing
+
+- Uses `BrowserRouter` from React Router (no basename needed for Netlify)
+- Netlify handles routing via `_redirects` file
+
+### Favicon
+
+The favicon is set via `<link rel="icon">` in `index.html` pointing to `/images/Profile.jpeg`
+
+---
+
+## 📦 Netlify Project Details
+
+```
+Project Name: sairaj-jadhav-portfolio
+Project ID: eac3f511-b066-404a-91e8-4c4ad072f2d9
+Admin URL: https://app.netlify.com/projects/sairaj-jadhav-portfolio
+Account: sairajj933@gmail.com
+```
+
+---
+
+## 🔄 Quick Update Workflow
+
+1. Make changes to the code
+2. Test locally: `npm run dev`
+3. Build: `npm run build`
+4. Test build locally: `npm run preview`
+5. Deploy: `netlify deploy --prod --dir=dist`
+
+---
+
+## 📞 Contact
+
+- **Email**: sairajjadhav433@gmail.com
+- **LinkedIn**: [linkedin.com/in/sairaj-jadhav-a79181287](https://www.linkedin.com/in/sairaj-jadhav-a79181287/)
+- **GitHub**: [github.com/SairajJadhav08](https://github.com/SairajJadhav08)

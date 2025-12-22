@@ -14,7 +14,7 @@ const HeroSection = () => {
   useEffect(() => {
     const currentRole = roles[currentRoleIndex];
     const typeSpeed = isDeleting ? 50 : 100;
-    
+
     const timeout = setTimeout(() => {
       if (!isDeleting) {
         if (displayText.length < currentRole.length) {
@@ -72,12 +72,12 @@ const HeroSection = () => {
           sizing="fill"
         />
       </div>
-      
+
       {/* Content */}
       <div className="relative z-10 container mx-auto px-6 py-20">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Content */}
-          <motion.div 
+          <motion.div
             className="space-y-6"
             variants={containerVariants}
             initial="hidden"
@@ -98,7 +98,7 @@ const HeroSection = () => {
               circuits, and creativity. Building intuitive devices, alert-based systems, and interactive
               simulations.
             </motion.p>
-            
+
             {/* CTA Buttons */}
             <motion.div variants={itemVariants} className="flex flex-wrap gap-4 pt-4">
               <Button size="lg" className="gap-2" asChild>
@@ -107,17 +107,17 @@ const HeroSection = () => {
                 </a>
               </Button>
               <Button variant="outline" size="lg" className="gap-2" asChild>
-                <a href="https://sairajjadhav08.github.io/SairajJadhav08/Resume%20new.pdf" target="_blank" rel="noopener noreferrer">
+                <a href="/images/Resume new.pdf" target="_blank" rel="noopener noreferrer">
                   <Eye className="w-4 h-4" /> View CV
                 </a>
               </Button>
               <Button variant="outline" size="lg" className="gap-2" asChild>
-                <a href="https://sairajjadhav08.github.io/SairajJadhav08/Resume%20new.pdf" download>
+                <a href="/images/Resume new.pdf" download>
                   <Download className="w-4 h-4" /> Download CV
                 </a>
               </Button>
             </motion.div>
-            
+
             {/* Social Links */}
             <div className="flex gap-4 pt-4">
               {[
@@ -145,34 +145,34 @@ const HeroSection = () => {
               ))}
             </div>
           </motion.div>
-          
+
           {/* Right Content - Profile Image */}
-          <motion.div 
+          <motion.div
             className="flex justify-center lg:justify-end"
             initial={{ opacity: 0, scale: 0.8, x: 50 }}
             animate={{ opacity: 1, scale: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
             <div className="relative">
-              <motion.div 
+              <motion.div
                 className="w-72 h-72 md:w-80 md:h-80 lg:w-96 lg:h-96 rounded-2xl overflow-hidden border-4 border-primary/30 shadow-2xl shadow-primary/20"
                 whileHover={{ scale: 1.02 }}
                 transition={{ duration: 0.3 }}
               >
-                <img 
-                  src="https://sairajjadhav08.github.io/SairajJadhav08/images/Profile.jpeg"
+                <img
+                  src="/images/Profile.jpeg"
                   alt="Sairaj Jadhav"
                   className="w-full h-full object-cover"
                 />
               </motion.div>
               {/* Decorative elements */}
-              <motion.div 
+              <motion.div
                 className="absolute -top-4 -right-4 w-20 h-20 border-2 border-primary/50 rounded-xl"
                 initial={{ opacity: 0, scale: 0 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 1.2, duration: 0.4 }}
               />
-              <motion.div 
+              <motion.div
                 className="absolute -bottom-4 -left-4 w-20 h-20 border-2 border-primary/50 rounded-xl"
                 initial={{ opacity: 0, scale: 0 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -181,15 +181,15 @@ const HeroSection = () => {
             </div>
           </motion.div>
         </div>
-        
+
         {/* Scroll Indicator */}
-        <motion.div 
+        <motion.div
           className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.5, duration: 0.5 }}
         >
-          <motion.div 
+          <motion.div
             className="w-6 h-10 border-2 border-muted-foreground rounded-full flex justify-center pt-2"
             animate={{ y: [0, 5, 0] }}
             transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}

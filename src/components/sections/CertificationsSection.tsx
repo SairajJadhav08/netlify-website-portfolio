@@ -10,43 +10,43 @@ const certifications = [
     title: "Developing Back-End Apps with Node.js and Express",
     issuer: "IBM",
     description: "Mastered server-side JavaScript development, RESTful API design, database integration, and Express.js framework for building scalable backend applications.",
-    image: "https://raw.githubusercontent.com/SairajJadhav08/SairajJadhav08/main/certificates/Developing%20Back-End%20Apps%20with%20Node.js%20and%20Express.jpg",
+    image: "/images/Developing Back-End Apps with Node.js and Express.jpg",
   },
   {
     title: "Developing Front-End Apps with React",
     issuer: "IBM",
     description: "Learned modern React.js development including components, hooks, state management, and building interactive, responsive user interfaces.",
-    image: "https://raw.githubusercontent.com/SairajJadhav08/SairajJadhav08/main/certificates/Developing%20Front-End%20Apps%20with%20React.jpg",
+    image: "/images/Developing Front-End Apps with React.jpg",
   },
   {
     title: "Developing AI Applications with Python and Flask",
     issuer: "IBM",
     description: "Gained expertise in building AI-powered web applications using Python and Flask, integrating machine learning models.",
-    image: "https://raw.githubusercontent.com/SairajJadhav08/SairajJadhav08/main/certificates/Developing%20AI%20Applications%20with%20Python%20and%20Flask%20_page-0001.jpg",
+    image: "/images/Developing AI Applications with Python and Flask _page-0001.jpg",
   },
   {
     title: "Django Application Development with SQL and Databases",
     issuer: "IBM",
     description: "Comprehensive training in Django web framework, SQL database management, ORM, and building full-stack web applications with Python.",
-    image: "https://raw.githubusercontent.com/SairajJadhav08/SairajJadhav08/main/certificates/Django%20Application%20Development%20with%20SQL%20and%20Databases..jpg",
+    image: "/images/Django Application Development with SQL and Databases..jpg",
   },
   {
     title: "Introduction to HTML, CSS and JavaScript",
     issuer: "IBM",
     description: "Foundational certification covering web development fundamentals including semantic HTML, modern CSS styling, and JavaScript programming.",
-    image: "https://raw.githubusercontent.com/SairajJadhav08/SairajJadhav08/main/certificates/Introduction%20to%20HTML%2C%20CSS%20and%20JavaScript.jpg",
+    image: "/images/Introduction to HTML, CSS and JavaScript.jpg",
   },
   {
     title: "Python for Data Science, AI and Development",
     issuer: "IBM",
     description: "Comprehensive Python programming certification covering data manipulation, analysis, AI/ML libraries, and building data-driven applications.",
-    image: "https://raw.githubusercontent.com/SairajJadhav08/SairajJadhav08/main/certificates/Python%20for%20data%20science%20%2C%20ai%20and%20development.jpg",
+    image: "/images/Python for data science , ai and development.jpg",
   },
   {
     title: "Git and GitHub",
     issuer: "IBM",
     description: "Mastered version control with Git and GitHub, including repository management, branching strategies, pull requests, and collaborative workflows.",
-    image: "https://raw.githubusercontent.com/SairajJadhav08/SairajJadhav08/main/certificates/git%20and%20github.jpg",
+    image: "/images/git and github.jpg",
   },
   {
     title: "Python Data Structures and Algorithms",
@@ -67,10 +67,10 @@ const CertificationsSection = () => {
             <div className="flex-1 h-px bg-border" />
           </div>
         </AnimatedSection>
-        
+
         <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" staggerDelay={0.1}>
           {certifications.map((cert, index) => (
-            <motion.a 
+            <motion.a
               key={index}
               href={LINKEDIN_CERTIFICATIONS_URL}
               target="_blank"
@@ -80,20 +80,20 @@ const CertificationsSection = () => {
               whileHover={{ y: -8, scale: 1.02 }}
             >
               <div className="relative h-40 overflow-hidden">
-                <img 
+                <img
                   src={cert.image}
                   alt={cert.title}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
-                <motion.div 
+                <motion.div
                   className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity"
                   whileHover={{ scale: 1.2, rotate: 15 }}
                 >
                   <ExternalLink className="w-5 h-5 text-primary" />
                 </motion.div>
               </div>
-              
+
               <div className="p-6">
                 <div className="flex items-center gap-2 mb-2">
                   <Award className="w-4 h-4 text-primary" />

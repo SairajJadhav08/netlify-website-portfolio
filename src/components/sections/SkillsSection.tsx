@@ -60,10 +60,10 @@ type GenAITool = {
 };
 
 const genAITools: GenAITool[] = [
-  { name: "Cursor", icon: "/SairajJadhav08/images/cursor-logo.png", fallbackIcon: Sparkles },
-  { name: "Windsurf", icon: "/SairajJadhav08/images/windsurf-logo.svg", fallbackIcon: Zap },
-  { name: "GitHub Copilot", icon: "/SairajJadhav08/images/github-copilot-logo.svg", fallbackIcon: Bot },
-  { name: "n8n", icon: "/SairajJadhav08/images/n8n-logo.png", fallbackIcon: Workflow },
+  { name: "Cursor", icon: "/images/cursor-logo.png", fallbackIcon: Sparkles },
+  { name: "Windsurf", icon: "/images/windsurf-logo.svg", fallbackIcon: Zap },
+  { name: "GitHub Copilot", icon: "/images/github-copilot-logo.svg", fallbackIcon: Bot },
+  { name: "n8n", icon: "/images/n8n-logo.png", fallbackIcon: Workflow },
   { name: "Antigravity", icon: null, fallbackIcon: Rocket },
   { name: "Onemind", icon: null, fallbackIcon: Brain },
 ];

@@ -9,6 +9,7 @@ import { AnimatedSection, AnimatedItem } from "@/components/ui/animated-section"
 
 const ContactSection = () => {
   const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -16,13 +17,43 @@ const ContactSection = () => {
     message: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast({
-      title: "Message Sent!",
-      description: "Thank you for reaching out. I'll get back to you soon!",
-    });
-    setFormData({ name: "", email: "", subject: "", message: "" });
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch("https://formspree.io/f/xnjagkjk", {
+        method: "POST",
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+        }),
+      });
+
+      if (response.ok) {
+        toast({
+          title: "Message Sent!",
+          description: "Thank you for reaching out. I'll get back to you soon!",
+        });
+        setFormData({ name: "", email: "", subject: "", message: "" });
+      } else {
+        throw new Error("Failed to send message");
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again or email me directly.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const contactInfo = [
@@ -41,7 +72,7 @@ const ContactSection = () => {
             <div className="flex-1 h-px bg-border" />
           </div>
         </AnimatedSection>
-        
+
         <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
           {/* Contact Info */}
           <AnimatedItem direction="left" className="space-y-8">
@@ -52,10 +83,10 @@ const ContactSection = () => {
                 your vision. Whether you have a question or just want to say hi, feel free to reach out!
               </p>
             </div>
-            
+
             <div className="space-y-4">
               {contactInfo.map((item, index) => (
-                <motion.div 
+                <motion.div
                   key={index}
                   className="flex items-center gap-4"
                   initial={{ opacity: 0, x: -30 }}
@@ -64,7 +95,7 @@ const ContactSection = () => {
                   transition={{ delay: 0.2 + index * 0.1 }}
                   whileHover={{ x: 5 }}
                 >
-                  <motion.div 
+                  <motion.div
                     className="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center"
                     whileHover={{ scale: 1.1, rotate: 5 }}
                   >
@@ -83,8 +114,8 @@ const ContactSection = () => {
                 </motion.div>
               ))}
             </div>
-            
-            <motion.div 
+
+            <motion.div
               className="flex gap-4"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -92,27 +123,27 @@ const ContactSection = () => {
               transition={{ delay: 0.5 }}
             >
               <Button variant="outline" className="gap-2" asChild>
-                <a href="https://sairajjadhav08.github.io/SairajJadhav08/Resume%20new.pdf" target="_blank" rel="noopener noreferrer">
+                <a href="/images/Resume new.pdf" target="_blank" rel="noopener noreferrer">
                   <Eye className="w-4 h-4" /> View CV
                 </a>
               </Button>
               <Button variant="outline" className="gap-2" asChild>
-                <a href="https://sairajjadhav08.github.io/SairajJadhav08/Resume%20new.pdf" download>
+                <a href="/images/Resume new.pdf" download>
                   <Download className="w-4 h-4" /> Download CV
                 </a>
               </Button>
             </motion.div>
           </AnimatedItem>
-          
+
           {/* Contact Form */}
           <AnimatedItem direction="right">
-            <motion.form 
-              onSubmit={handleSubmit} 
+            <motion.form
+              onSubmit={handleSubmit}
               className="glass-card p-8 space-y-6"
               whileHover={{ scale: 1.01 }}
             >
               <div className="grid md:grid-cols-2 gap-4">
-                <motion.div 
+                <motion.div
                   className="space-y-2"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -121,14 +152,14 @@ const ContactSection = () => {
                 >
                   <label className="text-sm text-muted-foreground">Your Name</label>
                   <Input
-                    placeholder="John Doe"
+                    placeholder="Donald duck"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     required
                     className="bg-secondary border-border"
                   />
                 </motion.div>
-                <motion.div 
+                <motion.div
                   className="space-y-2"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -138,7 +169,7 @@ const ContactSection = () => {
                   <label className="text-sm text-muted-foreground">Your Email</label>
                   <Input
                     type="email"
-                    placeholder="john@example.com"
+                    placeholder="donald@example.com"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     required
@@ -146,8 +177,8 @@ const ContactSection = () => {
                   />
                 </motion.div>
               </div>
-              
-              <motion.div 
+
+              <motion.div
                 className="space-y-2"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -163,8 +194,8 @@ const ContactSection = () => {
                   className="bg-secondary border-border"
                 />
               </motion.div>
-              
-              <motion.div 
+
+              <motion.div
                 className="space-y-2"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -181,15 +212,24 @@ const ContactSection = () => {
                   className="bg-secondary border-border resize-none"
                 />
               </motion.div>
-              
+
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.6 }}
               >
-                <Button type="submit" size="lg" className="w-full gap-2">
-                  <Send className="w-4 h-4" /> Send Message
+                <Button type="submit" size="lg" className="w-full gap-2" disabled={isSubmitting}>
+                  {isSubmitting ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4" /> Send Message
+                    </>
+                  )}
                 </Button>
               </motion.div>
             </motion.form>
