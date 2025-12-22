@@ -183,9 +183,12 @@ const ProjectsSection = () => {
 
         <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" staggerDelay={0.08}>
           {projects.map((project, index) => (
-            <motion.div
+            <motion.a
               key={index}
-              className="glass-card overflow-hidden group hover:border-primary/50 transition-all duration-300"
+              href="https://github.com/SairajJadhav08"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="glass-card overflow-hidden group hover:border-primary/50 transition-all duration-300 cursor-pointer block"
               variants={staggerItemVariants}
               whileHover={{ y: -8 }}
             >
@@ -240,7 +243,7 @@ const ProjectsSection = () => {
                   ))}
                 </div>
               </div>
-            </motion.div>
+            </motion.a>
           ))}
         </StaggerContainer>
       </div>
