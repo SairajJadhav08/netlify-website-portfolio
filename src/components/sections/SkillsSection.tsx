@@ -99,7 +99,7 @@ const SkillsSection = () => {
                     viewport={{ once: true }}
                     transition={{ delay: 0.1 * i }}
                   >
-                    <img src={skill.icon} alt={skill.name} className="w-6 h-6" />
+                    <img src={skill.icon} alt={skill.name} loading="lazy" className="w-6 h-6" />
                     <span className="text-muted-foreground">{skill.name}</span>
                   </motion.div>
                 ))}
@@ -157,6 +157,7 @@ const SkillsSection = () => {
                       <img
                         src={tool.icon}
                         alt={tool.name}
+                        loading="lazy"
                         className="w-6 h-6 rounded"
                         onError={(e) => {
                           e.currentTarget.style.display = 'none';

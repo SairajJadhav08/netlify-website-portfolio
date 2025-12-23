@@ -162,6 +162,8 @@ const HeroSection = () => {
                 <img
                   src="/images/Profile.jpeg"
                   alt="Sairaj Jadhav"
+                  fetchPriority="high"
+                  decoding="async"
                   className="w-full h-full object-cover"
                 />
               </motion.div>

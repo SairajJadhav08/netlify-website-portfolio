@@ -1,22 +1,11 @@
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Github, ChevronDown, ChevronUp } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { AnimatedSection, StaggerContainer, staggerItemVariants } from "@/components/ui/animated-section";
 
-const projects = [
-  {
-    title: "Smart Regional Alert & Navigation System",
-    role: "Backend & Frontend Developer • Team Leader",
-    category: "Full-Stack Development",
-    description: "Developed a web-based platform that provides real-time regional alerts and navigation assistance for events like power cuts, disease outbreaks, construction work, and disasters.",
-    features: [
-      "Real-time regional alerts for power cuts, outbreaks & disasters",
-      "Alternate route navigation assistance",
-      "Interactive map visualization",
-      "Community-driven alert system",
-      "Emergency notification system",
-    ],
-    technologies: ["HTML", "CSS", "JavaScript", "Node.js", "Express.js", "Firebase"],
-    image: "/images/smart-regional-alert.png",
-  },
+// Featured projects (shown by default) - AI/ML depth, Real-world application, System thinking, Leadership
+const featuredProjects = [
   {
     title: "LiveStream-Card-Recognition-System-LCRS",
     role: "Backend & Frontend Developer • Team Leader",
@@ -33,6 +22,21 @@ const projects = [
     image: "/images/real-time-card-detector.png",
   },
   {
+    title: "Smart Regional Alert & Navigation System",
+    role: "Backend & Frontend Developer • Team Leader",
+    category: "Full-Stack Development",
+    description: "Developed a web-based platform that provides real-time regional alerts and navigation assistance for events like power cuts, disease outbreaks, construction work, and disasters.",
+    features: [
+      "Real-time regional alerts for power cuts, outbreaks & disasters",
+      "Alternate route navigation assistance",
+      "Interactive map visualization",
+      "Community-driven alert system",
+      "Emergency notification system",
+    ],
+    technologies: ["HTML", "CSS", "JavaScript", "Node.js", "Express.js", "Firebase"],
+    image: "/images/smart-regional-alert.png",
+  },
+  {
     title: "NutriCare-360",
     role: "Backend & Frontend Developer • Team Leader",
     category: "Healthcare Tech",
@@ -46,21 +50,6 @@ const projects = [
     ],
     technologies: ["Python", "Flask", "HTML/CSS", "API Integration"],
     image: "/images/MedVault.png",
-  },
-  {
-    title: "AI Meme Generator",
-    role: "Backend & Frontend Developer",
-    category: "AI/ML",
-    description: "A creative tool that uses artificial intelligence to generate humorous memes from user-provided text, blending creativity with technical skills in NLP and image processing.",
-    features: [
-      "AI-powered meme generation",
-      "Text-to-meme conversion",
-      "Natural Language Processing",
-      "Image processing & manipulation",
-      "Export & share functionality",
-    ],
-    technologies: ["Python", "NLP", "Pillow", "API"],
-    image: "/images/ai-meme-generator.png",
   },
   {
     title: "Viro-AI: Viral Insight Rapid Optimization",
@@ -93,21 +82,6 @@ const projects = [
     image: "/images/Wifi Password.png",
   },
   {
-    title: "AIVORA Labs",
-    role: "Research analysis & Development Developer",
-    category: "AI & Research Automation",
-    description: "Artificial Intelligence for Virtual Observation Research Automation Labs - An advanced AI-powered platform designed to automate virtual observation research processes.",
-    features: [
-      "AI-powered research automation",
-      "Automated data collection & processing",
-      "Advanced analytics & insights",
-      "Virtual observation capabilities",
-      "Intelligent workflow automation",
-    ],
-    technologies: ["Python", "AI/ML", "Automation", "Research"],
-    image: "/images/AIVORA Logo.png",
-  },
-  {
     title: "BRAILLEAR",
     role: "AI / IoT Developer",
     category: "Assistive Technology",
@@ -121,6 +95,40 @@ const projects = [
     ],
     technologies: ["Python", "Text-to-Speech", "Assistive Tech", "IoT"],
     image: "/images/Baillear Logo.png",
+  },
+];
+
+// Additional projects (shown on expand)
+const moreProjects = [
+  {
+    title: "AI Meme Generator",
+    role: "Backend & Frontend Developer",
+    category: "AI/ML",
+    description: "A creative tool that uses artificial intelligence to generate humorous memes from user-provided text, blending creativity with technical skills in NLP and image processing.",
+    features: [
+      "AI-powered meme generation",
+      "Text-to-meme conversion",
+      "Natural Language Processing",
+      "Image processing & manipulation",
+      "Export & share functionality",
+    ],
+    technologies: ["Python", "NLP", "Pillow", "API"],
+    image: "/images/ai-meme-generator.png",
+  },
+  {
+    title: "AIVORA Labs",
+    role: "Research analysis & Development Developer",
+    category: "AI & Research Automation",
+    description: "Artificial Intelligence for Virtual Observation Research Automation Labs - An advanced AI-powered platform designed to automate virtual observation research processes.",
+    features: [
+      "AI-powered research automation",
+      "Automated data collection & processing",
+      "Advanced analytics & insights",
+      "Virtual observation capabilities",
+      "Intelligent workflow automation",
+    ],
+    technologies: ["Python", "AI/ML", "Automation", "Research"],
+    image: "/images/AIVORA Logo.png",
   },
   {
     title: "DriveU",
@@ -169,7 +177,85 @@ const projects = [
   },
 ];
 
+const ProjectCard = ({ project }: { project: typeof featuredProjects[0] }) => (
+  <motion.div
+    className="glass-card overflow-hidden group hover:border-primary/50 transition-all duration-300 flex flex-col h-full"
+    variants={staggerItemVariants}
+    whileHover={{ y: -8 }}
+  >
+    <div className="relative h-48 overflow-hidden flex-shrink-0 bg-secondary">
+      <img
+        src={project.image}
+        alt={project.title}
+        loading="lazy"
+        decoding="async"
+        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent" />
+      <motion.span
+        className="absolute top-4 left-4 px-3 py-1 bg-primary/90 text-primary-foreground text-xs rounded-full"
+        initial={{ opacity: 0, x: -20 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
+        transition={{ delay: 0.2 }}
+      >
+        {project.category}
+      </motion.span>
+    </div>
+
+    <div className="p-6 flex flex-col flex-grow">
+      <h3 className="text-xl font-bold mb-1 group-hover:text-primary transition-colors">
+        {project.title}
+      </h3>
+      <p className="text-primary text-sm mb-3">{project.role}</p>
+      <p className="text-muted-foreground text-sm mb-4 line-clamp-3">
+        {project.description}
+      </p>
+
+      <div className="space-y-2 mb-4">
+        <p className="text-xs text-muted-foreground font-semibold">Key Features:</p>
+        <ul className="text-xs text-muted-foreground space-y-1">
+          {project.features.slice(0, 3).map((feature, i) => (
+            <li key={i} className="flex items-start gap-2">
+              <span className="text-primary">•</span>
+              {feature}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div className="flex flex-wrap gap-2 mb-4 flex-grow">
+        {project.technologies.slice(0, 4).map((tech, i) => (
+          <motion.span
+            key={i}
+            className="px-2 py-1 bg-secondary text-xs rounded h-fit"
+            whileHover={{ scale: 1.1 }}
+          >
+            {tech}
+          </motion.span>
+        ))}
+      </div>
+
+      {/* GitHub Button - Always at bottom */}
+      <div className="mt-auto">
+        <Button variant="outline" size="sm" className="w-full gap-2" asChild>
+          <a
+            href="https://github.com/SairajJadhav08"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Github className="w-4 h-4" />
+            View on GitHub
+          </a>
+        </Button>
+      </div>
+    </div>
+  </motion.div>
+);
+
 const ProjectsSection = () => {
+  const [showMore, setShowMore] = useState(false);
+
   return (
     <section id="projects" className="py-20">
       <div className="container mx-auto px-6">
@@ -181,71 +267,59 @@ const ProjectsSection = () => {
           </div>
         </AnimatedSection>
 
+        {/* Featured Projects */}
         <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-3 gap-6" staggerDelay={0.08}>
-          {projects.map((project, index) => (
-            <motion.a
-              key={index}
-              href="https://github.com/SairajJadhav08"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="glass-card overflow-hidden group hover:border-primary/50 transition-all duration-300 cursor-pointer block"
-              variants={staggerItemVariants}
-              whileHover={{ y: -8 }}
-            >
-              <div className="relative h-48 overflow-hidden">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent" />
-                <motion.span
-                  className="absolute top-4 left-4 px-3 py-1 bg-primary/90 text-primary-foreground text-xs rounded-full"
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.2 }}
-                >
-                  {project.category}
-                </motion.span>
-              </div>
-
-              <div className="p-6">
-                <h3 className="text-xl font-bold mb-1 group-hover:text-primary transition-colors">
-                  {project.title}
-                </h3>
-                <p className="text-primary text-sm mb-3">{project.role}</p>
-                <p className="text-muted-foreground text-sm mb-4 line-clamp-3">
-                  {project.description}
-                </p>
-
-                <div className="space-y-2 mb-4">
-                  <p className="text-xs text-muted-foreground font-semibold">Key Features:</p>
-                  <ul className="text-xs text-muted-foreground space-y-1">
-                    {project.features.slice(0, 3).map((feature, i) => (
-                      <li key={i} className="flex items-start gap-2">
-                        <span className="text-primary">•</span>
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="flex flex-wrap gap-2">
-                  {project.technologies.slice(0, 4).map((tech, i) => (
-                    <motion.span
-                      key={i}
-                      className="px-2 py-1 bg-secondary text-xs rounded"
-                      whileHover={{ scale: 1.1 }}
-                    >
-                      {tech}
-                    </motion.span>
-                  ))}
-                </div>
-              </div>
-            </motion.a>
+          {featuredProjects.map((project, index) => (
+            <ProjectCard key={index} project={project} />
           ))}
         </StaggerContainer>
+
+        {/* More Projects (Expandable) */}
+        <AnimatePresence>
+          {showMore && (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.5, ease: "easeInOut" }}
+              className="overflow-hidden"
+            >
+              <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6" staggerDelay={0.08}>
+                {moreProjects.map((project, index) => (
+                  <ProjectCard key={index} project={project} />
+                ))}
+              </StaggerContainer>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* View More / View Less Button */}
+        <motion.div
+          className="flex justify-center mt-10"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3 }}
+        >
+          <Button
+            variant="outline"
+            size="lg"
+            className="gap-2"
+            onClick={() => setShowMore(!showMore)}
+          >
+            {showMore ? (
+              <>
+                Show Less Projects
+                <ChevronUp className="w-4 h-4" />
+              </>
+            ) : (
+              <>
+                View More Projects
+                <ChevronDown className="w-4 h-4" />
+              </>
+            )}
+          </Button>
+        </motion.div>
       </div>
     </section>
   );
