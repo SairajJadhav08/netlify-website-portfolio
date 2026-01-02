@@ -176,5 +176,5 @@ Account: sairajj933@gmail.com
 ## 📞 Contact
 
 - **Email**: sairajjadhav433@gmail.com
-- **LinkedIn**: [linkedin.com/in/sairaj-jadhav-a79181287](https://www.linkedin.com/in/sairaj-jadhav-a79181287/)
+- **LinkedIn**: [linkedin.com/in/sairaj-jadhav-](https://www.linkedin.com/in/sairaj-jadhav-/)
 - **GitHub**: [github.com/SairajJadhav08](https://github.com/SairajJadhav08)

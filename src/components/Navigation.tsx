@@ -31,18 +31,31 @@ const Navigation = () => {
   }, []);
 
   const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
+    // Close mobile menu first
     setIsMobileMenuOpen(false);
+
+    // Use setTimeout to allow the menu to close before scrolling
+    // This fixes the issue where scroll doesn't work on mobile
+    setTimeout(() => {
+      const element = document.querySelector(href);
+      if (element) {
+        // Get the navbar height for offset
+        const navbarHeight = 64; // h-16 = 4rem = 64px
+        const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+        const offsetPosition = elementPosition - navbarHeight;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: "smooth"
+        });
+      }
+    }, 100); // Small delay to let menu animation complete
   };
 
   return (
-    <motion.nav 
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? "bg-background/80 backdrop-blur-lg border-b border-border" : "bg-transparent"
-      }`}
+    <motion.nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? "bg-background/80 backdrop-blur-lg border-b border-border" : "bg-transparent"
+        }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
@@ -50,8 +63,8 @@ const Navigation = () => {
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <motion.a 
-            href="#hero" 
+          <motion.a
+            href="#hero"
             onClick={(e) => { e.preventDefault(); scrollToSection("#hero"); }}
             className="text-xl font-bold"
             whileHover={{ scale: 1.05 }}
@@ -61,7 +74,7 @@ const Navigation = () => {
             <span className="text-foreground">SJ</span>
             <span className="text-primary">/&gt;</span>
           </motion.a>
-          
+
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-1">
             {navLinks.slice(0, 8).map((link, index) => (
@@ -78,7 +91,7 @@ const Navigation = () => {
               </motion.button>
             ))}
             <div className="relative group">
-              <motion.button 
+              <motion.button
                 className="px-3 py-2 text-sm text-muted-foreground hover:text-primary transition-colors"
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -87,7 +100,7 @@ const Navigation = () => {
                 More
               </motion.button>
               <div className="absolute right-0 top-full pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                <motion.div 
+                <motion.div
                   className="bg-card border border-border rounded-lg shadow-xl p-2 min-w-[150px]"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -105,7 +118,7 @@ const Navigation = () => {
               </div>
             </div>
           </div>
-          
+
           {/* Mobile Menu Button */}
           <Button
             variant="ghost"
@@ -139,11 +152,11 @@ const Navigation = () => {
           </Button>
         </div>
       </div>
-      
+
       {/* Mobile Menu */}
       <AnimatePresence>
         {isMobileMenuOpen && (
-          <motion.div 
+          <motion.div
             className="lg:hidden bg-background border-b border-border overflow-hidden"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
@@ -156,7 +169,7 @@ const Navigation = () => {
                   <motion.button
                     key={link.href}
                     onClick={() => scrollToSection(link.href)}
-                    className="text-left px-4 py-3 text-sm text-muted-foreground hover:text-primary hover:bg-secondary rounded-lg transition-colors"
+                    className="text-left px-4 py-3 text-sm text-muted-foreground hover:text-primary hover:bg-secondary rounded-lg transition-colors cursor-pointer"
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.05 * index }}

@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { AnimatedSection, StaggerContainer, staggerItemVariants } from "@/components/ui/animated-section";
 import pythonDsaCert from "@/assets/certificates/python-dsa-infosys.jpg";
 
-const LINKEDIN_CERTIFICATIONS_URL = "https://www.linkedin.com/in/sairaj-jadhav-a79181287/details/certifications/";
+const LINKEDIN_CERTIFICATIONS_URL = "https://www.linkedin.com/in/sairaj-jadhav-/details/certifications/";
 
 // Featured certifications (shown by default)
 const featuredCertifications = [

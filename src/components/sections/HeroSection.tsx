@@ -107,12 +107,12 @@ const HeroSection = () => {
                 </a>
               </Button>
               <Button variant="outline" size="lg" className="gap-2" asChild>
-                <a href="/images/Resume new.pdf" target="_blank" rel="noopener noreferrer">
+                <a href="/images/Sairaj Jadhav's Resume.pdf" target="_blank" rel="noopener noreferrer">
                   <Eye className="w-4 h-4" /> View CV
                 </a>
               </Button>
               <Button variant="outline" size="lg" className="gap-2" asChild>
-                <a href="/images/Resume new.pdf" download>
+                <a href="/images/Sairaj Jadhav's Resume.pdf" download>
                   <Download className="w-4 h-4" /> Download CV
                 </a>
               </Button>
@@ -121,7 +121,7 @@ const HeroSection = () => {
             {/* Social Links */}
             <div className="flex gap-4 pt-4">
               {[
-                { href: "https://www.linkedin.com/in/sairaj-jadhav-a79181287/", icon: Linkedin },
+                { href: "https://www.linkedin.com/in/sairaj-jadhav-/", icon: Linkedin },
                 { href: "https://github.com/SairajJadhav08", icon: Github },
                 { href: "https://www.instagram.com/sairajjadhav08/", icon: Instagram },
                 { href: "mailto:sairajjadhav433@gmail.com", icon: Mail },
