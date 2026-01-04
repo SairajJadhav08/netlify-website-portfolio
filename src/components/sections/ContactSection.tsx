@@ -123,12 +123,12 @@ const ContactSection = () => {
               transition={{ delay: 0.5 }}
             >
               <Button variant="outline" className="gap-2" asChild>
-                <a href="/images/Sairaj Jadhav's Resume.pdf" target="_blank" rel="noopener noreferrer">
+                <a href="/images/Sairaj Jadhav Full stack Developer.pdf" target="_blank" rel="noopener noreferrer">
                   <Eye className="w-4 h-4" /> View CV
                 </a>
               </Button>
               <Button variant="outline" className="gap-2" asChild>
-                <a href="/images/Sairaj Jadhav's Resume.pdf" download>
+                <a href="/images/Sairaj Jadhav Full stack Developer.pdf" download>
                   <Download className="w-4 h-4" /> Download CV
                 </a>
               </Button>
