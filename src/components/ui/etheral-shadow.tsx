@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useRef, useId, useEffect, CSSProperties } from 'react';
+import React, { useRef, useId, useEffect, useState, CSSProperties } from 'react';
 import { animate, useMotionValue, AnimationPlaybackControls } from 'framer-motion';
 
 // Type definitions
@@ -55,6 +55,40 @@ const useInstanceId = (): string => {
     return instanceId;
 };
 
+// Hook to detect mobile devices and reduced motion preference
+const useMobileOptimizations = () => {
+    const [isMobile, setIsMobile] = useState(false);
+    const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+    useEffect(() => {
+        // Detect mobile device by screen width and touch capability
+        const checkMobile = () => {
+            const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+            const isSmallScreen = window.innerWidth < 768;
+            setIsMobile(isTouchDevice && isSmallScreen);
+        };
+
+        // Check for reduced motion preference
+        const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+        setPrefersReducedMotion(motionQuery.matches);
+
+        const handleMotionChange = (e: MediaQueryListEvent) => {
+            setPrefersReducedMotion(e.matches);
+        };
+
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        motionQuery.addEventListener('change', handleMotionChange);
+
+        return () => {
+            window.removeEventListener('resize', checkMobile);
+            motionQuery.removeEventListener('change', handleMotionChange);
+        };
+    }, []);
+
+    return { isMobile, prefersReducedMotion };
+};
+
 export function EtheralShadow({
     sizing = 'fill',
     color = 'rgba(128, 128, 128, 1)',
@@ -65,20 +99,48 @@ export function EtheralShadow({
     children
 }: ShadowOverlayProps) {
     const id = useInstanceId();
-    const animationEnabled = animation && animation.scale > 0;
+    const { isMobile, prefersReducedMotion } = useMobileOptimizations();
+
+    // Reduce animation intensity on mobile for better performance
+    const mobileScaleMultiplier = isMobile ? 0.5 : 1;
+    const mobileSpeedMultiplier = isMobile ? 0.6 : 1;
+
+    // Disable animation entirely if user prefers reduced motion
+    const shouldAnimate = animation && animation.scale > 0 && !prefersReducedMotion;
+
     const feColorMatrixRef = useRef<SVGFEColorMatrixElement>(null);
     const hueRotateMotionValue = useMotionValue(180);
     const hueRotateAnimation = useRef<AnimationPlaybackControls | null>(null);
+    const lastUpdateTime = useRef(0);
 
-    const displacementScale = animation ? mapRange(animation.scale, 1, 100, 20, 100) : 0;
-    const animationDuration = animation ? mapRange(animation.speed, 1, 100, 1000, 50) : 1;
+    // Apply mobile optimizations to displacement scale (lower = less GPU intensive)
+    const baseDisplacementScale = animation ? mapRange(animation.scale, 1, 100, 20, 100) : 0;
+    const displacementScale = baseDisplacementScale * mobileScaleMultiplier;
+
+    // Slower animation duration on mobile for smoother performance
+    const baseAnimationDuration = animation ? mapRange(animation.speed, 1, 100, 1000, 50) : 1;
+    const animationDuration = baseAnimationDuration / mobileSpeedMultiplier;
+
+    // Mobile: reduce numOctaves for simpler turbulence (1 vs 2)
+    const numOctaves = isMobile ? 1 : 2;
+
+    // Mobile: use simpler base frequency
+    const baseFrequency = animation ? (
+        isMobile
+            ? `${mapRange(animation.scale, 0, 100, 0.002, 0.001)},${mapRange(animation.scale, 0, 100, 0.006, 0.003)}`
+            : `${mapRange(animation.scale, 0, 100, 0.001, 0.0005)},${mapRange(animation.scale, 0, 100, 0.004, 0.002)}`
+    ) : "0.001,0.004";
 
     useEffect(() => {
-        if (feColorMatrixRef.current && animationEnabled) {
+        if (feColorMatrixRef.current && shouldAnimate) {
             if (hueRotateAnimation.current) {
                 hueRotateAnimation.current.stop();
             }
             hueRotateMotionValue.set(0);
+
+            // Throttle updates on mobile to reduce CPU/GPU load
+            const throttleMs = isMobile ? 50 : 0; // ~20fps on mobile vs 60fps on desktop
+
             hueRotateAnimation.current = animate(hueRotateMotionValue, 360, {
                 duration: animationDuration / 25,
                 repeat: Infinity,
@@ -87,8 +149,12 @@ export function EtheralShadow({
                 ease: "linear",
                 delay: 0,
                 onUpdate: (value: number) => {
-                    if (feColorMatrixRef.current) {
-                        feColorMatrixRef.current.setAttribute("values", String(value));
+                    const now = Date.now();
+                    if (now - lastUpdateTime.current >= throttleMs) {
+                        if (feColorMatrixRef.current) {
+                            feColorMatrixRef.current.setAttribute("values", String(value));
+                        }
+                        lastUpdateTime.current = now;
                     }
                 }
             });
@@ -99,7 +165,7 @@ export function EtheralShadow({
                 }
             };
         }
-    }, [animationEnabled, animationDuration, hueRotateMotionValue]);
+    }, [shouldAnimate, animationDuration, hueRotateMotionValue, isMobile]);
 
     return (
         <div
@@ -109,6 +175,9 @@ export function EtheralShadow({
                 position: "relative",
                 width: "100%",
                 height: "100%",
+                // Hardware acceleration hints for mobile
+                transform: "translateZ(0)",
+                willChange: shouldAnimate ? "auto" : "auto",
                 ...style
             }}
         >
@@ -116,17 +185,20 @@ export function EtheralShadow({
                 style={{
                     position: "absolute",
                     inset: -displacementScale,
-                    filter: animationEnabled ? `url(#${id}) blur(4px)` : "none"
+                    filter: shouldAnimate ? `url(#${id}) blur(${isMobile ? '2px' : '4px'})` : "none",
+                    // Hardware acceleration for the animated layer
+                    transform: "translateZ(0)",
+                    backfaceVisibility: "hidden",
                 }}
             >
-                {animationEnabled && (
+                {shouldAnimate && (
                     <svg style={{ position: "absolute" }}>
                         <defs>
                             <filter id={id}>
                                 <feTurbulence
                                     result="undulation"
-                                    numOctaves="2"
-                                    baseFrequency={`${mapRange(animation.scale, 0, 100, 0.001, 0.0005)},${mapRange(animation.scale, 0, 100, 0.004, 0.002)}`}
+                                    numOctaves={numOctaves}
+                                    baseFrequency={baseFrequency}
                                     seed="0"
                                     type="turbulence"
                                 />
@@ -192,9 +264,11 @@ export function EtheralShadow({
                         position: "absolute",
                         inset: 0,
                         backgroundImage: `url("https://framerusercontent.com/images/g0QcWrxr87K0ufOxIUFBakwYA8.png")`,
-                        backgroundSize: noise.scale * 200,
+                        // Reduce noise texture size on mobile for better performance
+                        backgroundSize: isMobile ? noise.scale * 300 : noise.scale * 200,
                         backgroundRepeat: "repeat",
-                        opacity: noise.opacity / 2
+                        // Reduce noise opacity on mobile
+                        opacity: isMobile ? noise.opacity / 3 : noise.opacity / 2
                     }}
                 />
             )}

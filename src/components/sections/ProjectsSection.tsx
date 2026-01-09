@@ -216,9 +216,9 @@ const ProjectCard = ({ project }: { project: typeof featuredProjects[0] }) => (
         <p className="text-xs text-muted-foreground font-semibold">Key Features:</p>
         <ul className="text-xs text-muted-foreground space-y-1">
           {project.features.slice(0, 3).map((feature, i) => (
-            <li key={i} className="flex items-start gap-2">
-              <span className="text-primary">•</span>
-              {feature}
+            <li key={i} className="flex items-baseline gap-2">
+              <span className="text-primary leading-none">•</span>
+              <span>{feature}</span>
             </li>
           ))}
         </ul>
